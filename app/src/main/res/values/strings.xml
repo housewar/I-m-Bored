@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">I\'m Bored</string>
+    <string name="category">Category</string>
+    <string name="activity">Activity</string>
+    <string name="details">Details</string>
+    <string name="back_button">Back Button</string>
+    <string name="categories_and_activities">Categories and Activities</string>
+    <string name="activity_list_details">Activity List Details</string>
+</resources>
