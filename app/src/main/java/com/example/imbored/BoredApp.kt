@@ -39,6 +39,7 @@ fun BoredApp(
     /*Expose state to cause refresh when values update*/
     val selectedCategory = state.category
     val selectedActivity = state.activity
+    val isNavBackward = state.isNavBackward
 
     val appActivity: Activity? = if (LocalContext.current is Activity){
         LocalContext.current as Activity
@@ -47,7 +48,7 @@ fun BoredApp(
     }
 
     val navigateBack = {
-        viewModel.updateLastScreen(navController.currentBackStackEntry?.destination?.route ?: "CATEGORY_LIST")
+        viewModel.updateIsNavBackward(isNavBackward = true)
         if ( navController.previousBackStackEntry != null ){
             navController.navigateUp()
         } else {
@@ -77,14 +78,14 @@ fun BoredApp(
                     categorySelect = { selectedCategory ->
                         viewModel.updateCategory(selectedCategory)
                         if (!isExpandedScreen) {
-                            viewModel.updateLastScreen(Screen.CATEGORY_LIST.name)
+                            viewModel.updateIsNavBackward(isNavBackward = false)
                             navController.navigate(Screen.ACTIVITY_LIST.name)
                         }
                     },
                     activities = viewModel.getCurrentActivities(),
                     activitySelect = { selectedActivity ->
                         viewModel.updateActivity(selectedActivity)
-                        viewModel.updateLastScreen(Screen.CATEGORY_LIST.name)
+                        viewModel.updateIsNavBackward(isNavBackward = false)
                         navController.navigate(Screen.ACTIVITY_LIST.name)
                     },
                     onBackPress = {navigateBack()},
@@ -100,13 +101,13 @@ fun BoredApp(
                     activities = viewModel.getCurrentActivities(),
                     activitySelect = { selectedActivity ->
                         viewModel.updateActivity(selectedActivity)
-                        viewModel.updateLastScreen(Screen.ACTIVITY_LIST.name)
+                        viewModel.updateIsNavBackward(isNavBackward = false)
                         navController.navigate(Screen.ACTIVITY_DETAILS.name)
                     },
                     selectedActivity = viewModel.getCurrentActivity(),
                     onBackPress = {navigateBack()},
                     isExpandedScreen = isExpandedScreen,
-                    lastScreenName = viewModel.getLastScreen()
+                    isNavBackward = viewModel.isNavBackward()
                 )
             }
             composable(route = Screen.ACTIVITY_DETAILS.name) {

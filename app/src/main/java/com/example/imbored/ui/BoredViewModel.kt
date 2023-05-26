@@ -32,14 +32,6 @@ class BoredViewModel : ViewModel() {
         }
     }
 
-    fun updateLastScreen(screenName: String){
-        _state.update {
-            it.copy(
-                lastScreen = screenName
-            )
-        }
-    }
-
     fun getCategories() : List<Category> {
         return DataSource.categories
     }
@@ -55,14 +47,17 @@ class BoredViewModel : ViewModel() {
             it.category.name == _state.value.category.name
         }
     }
-    fun getLastScreen(): String {
-        return _state.value.lastScreen
-    }
-
-    fun getCurrentCategory() : Category {
-        return _state.value.category
-    }
     fun getCurrentActivity() : Activity {
         return _state.value.activity
+    }
+    fun isNavBackward(): Boolean{
+        return _state.value.isNavBackward
+    }
+    fun updateIsNavBackward(isNavBackward: Boolean){
+        _state.update {
+            it.copy(
+                isNavBackward = isNavBackward
+            )
+        }
     }
 }

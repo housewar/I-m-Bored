@@ -11,7 +11,6 @@ import com.example.imbored.ui.BoredViewModel
 import com.example.imbored.ui.activity_details_screen.ActivityDetails
 import com.example.imbored.ui.activity_list_screen.ActivityList
 import com.example.imbored.ui.category_list_screen.CategoryList
-import com.example.imbored.ui.util.Screen
 
 @Composable
 fun ActivityRoute(
@@ -23,11 +22,11 @@ fun ActivityRoute(
     modifier: Modifier = Modifier,
     onBackPress: () -> Unit = {},
     isExpandedScreen: Boolean = false,
-    lastScreenName: String = Screen.CATEGORY_LIST.name
+    isNavBackward: Boolean = false
 ) {
     Row(modifier = modifier){
 
-        if (isExpandedScreen && lastScreenName == Screen.ACTIVITY_DETAILS.name){
+        if (isExpandedScreen && isNavBackward){
             CategoryList(
                 categories = categories,
                 categorySelect = categorySelect,
@@ -41,7 +40,7 @@ fun ActivityRoute(
             modifier = Modifier.weight(1f),
             onBackPress = onBackPress)
 
-        if (isExpandedScreen && lastScreenName == Screen.CATEGORY_LIST.name){
+        if (isExpandedScreen && !isNavBackward){
             ActivityDetails(
                 selectedActivity = selectedActivity,
                 modifier = Modifier.weight(1f),
